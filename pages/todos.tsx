@@ -4,19 +4,18 @@ import { getTodos, createTodo, updateTodo, Todo } from "../modules/api";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 
-const TodosPage = ({ filterDone=false }) => {
+const TodoListPage = ({ filterDone=false }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const loadTodos = async () => {
-    const todos = await getTodos();
-    setTodos(todos);
-  };
-
   useEffect(() => {
+    const loadTodos = async () => {
+      const todos = await getTodos();
+      setTodos(todos);
+    };
     loadTodos();
   }, []);
 
-  const addTodo = async (summary: string) => {
+  const handleCreateTodo = async (summary: string) => {
     const todo = await createTodo(summary);
     setTodos((prevTodos) => [todo, ...prevTodos]);
   };
@@ -36,7 +35,6 @@ const TodosPage = ({ filterDone=false }) => {
       <h1>Todos</h1>
       {filterDone ? (
         <>
-          <TodoForm onSubmit={addTodo} />
           <h2>Done Todos</h2>
           <TodoList todos={doneTodos} markTodoDone={markTodoDone} />
           <Link href="/todos">
@@ -45,7 +43,7 @@ const TodosPage = ({ filterDone=false }) => {
         </>
       ) : (
         <>
-          <TodoForm onSubmit={addTodo} />
+          <TodoForm onSubmit={handleCreateTodo} />
           <h2>Open Todos</h2>
           <TodoList todos={openTodos} markTodoDone={markTodoDone} />
           <Link href="/done">
@@ -57,4 +55,4 @@ const TodosPage = ({ filterDone=false }) => {
   );
 };
 
-export default TodosPage;
+export default TodoListPage;

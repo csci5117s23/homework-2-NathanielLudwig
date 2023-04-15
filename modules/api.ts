@@ -2,7 +2,7 @@ export type Todo = {
     _id: string;
     summary: string;
     done: boolean;
-    created_at: string;
+    createdOn: string;
 };
 
 const BASE_API_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;

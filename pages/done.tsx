@@ -1,8 +1,8 @@
-import TodosPage from "./todos";
+import TodoListPage from "./todos";
 
 const DonePage = () => {
   return (
-    <TodosPage filterDone={true} />
+    <TodoListPage filterDone={true} />
   );
 };
 
