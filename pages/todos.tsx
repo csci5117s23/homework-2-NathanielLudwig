@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getTodos, createTodo, updateTodo, Todo } from "../modules/api";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
+import { Stack } from "react-bootstrap";
 
 const TodoListPage = ({ filterDone=false }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -31,8 +32,8 @@ const TodoListPage = ({ filterDone=false }) => {
   const doneTodos = todos.filter((todo) => todo.done);
 
   return (
-    <>
-      <h1>Todos</h1>
+    <Stack gap={2} className="col-md-5 mx-auto pt-3">
+      <h1>My Todos:</h1>
       {filterDone ? (
         <>
           <h2>Done Todos</h2>
@@ -51,7 +52,7 @@ const TodoListPage = ({ filterDone=false }) => {
           </Link>
         </>
       )}
-    </>
+    </Stack>
   );
 };
 

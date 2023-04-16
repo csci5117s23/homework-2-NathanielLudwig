@@ -12,6 +12,10 @@ export async function getTodos(): Promise<Todo[]> {
     return await response.json();
 }
 
+export async function getTodo(id: string): Promise<Todo> {
+    const response = await fetch(`${BASE_API_URL}/todos/${id}`);
+    return await response.json();
+}
 export async function createTodo(summary: string): Promise<Todo> {
     const response = await fetch(`${BASE_API_URL}/todos`, {
         method: "POST",
