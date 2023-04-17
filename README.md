@@ -11,7 +11,7 @@ Please fill out all of the following sections to help us grade your submission:
 
 ## Link to Site
 
-sage-daifuku-fcf315.netlify.app
+https://sage-daifuku-fcf315.netlify.app
 
 ## Challenge Task
 
