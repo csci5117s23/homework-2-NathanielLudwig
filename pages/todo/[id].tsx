@@ -1,34 +1,38 @@
 import TodoDetails from "@/components/TodoDetails";
-import { Todo, getTodo } from "@/modules/api";
+import { Todo, getTodo, updateTodo } from "@/modules/api";
+import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Col, Container, Row, Stack } from "react-bootstrap";
 
 const TodoPage = () => {
   const [todo, setTodo] = useState<Todo | null>(null);
-
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
   const router = useRouter();
   const id = router.query.id as string;
 
   useEffect(() => {
     const loadTodos = async () => {
-      const todo = await getTodo(id);
-      setTodo(todo);
+      const token = await getToken({ template: "codehooks" });
+      if (token) {
+        const todo = await getTodo(token, id);
+        setTodo(todo);
+      }
     };
-    if (id) loadTodos();
-  }, [id]);
+    if (id && userId) loadTodos();
+  }, [id, getToken, userId]);
+
+  const onUpdate = async (id: string, updates: Partial<Todo>) => {
+    const token = await getToken({ template: "codehooks" });
+    if (token) {
+      const updatedTodo = await updateTodo(token, id, updates);
+      setTodo(updatedTodo);
+    }
+  };
 
   return (
     <>
-      {todo && <TodoDetails todo={todo} />}
+      {todo && <TodoDetails todo={todo} onUpdate={onUpdate} />}
     </>
-    // <Container>
-    //   <Row>
-    //     <Col md={{ span: 6, offset: 3 }}>
-    //       {todo && <TodoDetails todo={todo} />}
-    //     </Col>
-    //   </Row>
-    // </Container>
   );
 };
 

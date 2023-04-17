@@ -1,5 +1,6 @@
 import { Todo } from "@/modules/api";
-import TodoPreview from "./TodoPreview";
+import { Button, ListGroup, Stack } from "react-bootstrap";
+import Link from "next/link";
 
 type TodoListProps = {
   todos: Todo[];
@@ -7,17 +8,17 @@ type TodoListProps = {
 };
 
 const TodoList = ({ todos, markTodoDone }: TodoListProps) => {
-
   return (
-    <>
+    <ListGroup>
       {todos.map((todo) => (
-        <TodoPreview
-          key={todo._id}
-          todo={todo}
-          markTodoDone={markTodoDone}
-        />
+          <ListGroup.Item key={todo._id}>
+            <Stack direction="horizontal" gap={3}>
+              <Link href={`/todo/${todo._id}`} style={{textOverflow: "ellipsis", overflow: "hidden"}}>{todo.summary}</Link>
+              {!todo.done && <Button className="ms-auto" onClick={() => markTodoDone(todo._id)}>Mark as done</Button>}
+            </Stack>
+          </ListGroup.Item>
       ))}
-    </>
+    </ListGroup>
   );
 };
 
